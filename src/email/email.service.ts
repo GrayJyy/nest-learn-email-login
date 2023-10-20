@@ -20,7 +20,17 @@ export class EmailService {
       },
     });
   }
-  getEnv() {
-    console.log(this.configService.get('application.email.user'));
+
+  async sendMail(to: string, subject: string, html: any) {
+    const _info = await this.transporter.sendMail({
+      from: {
+        name: 'gray',
+        address: this.configService.get('application.email.user'),
+      },
+      to,
+      subject,
+      html,
+    });
+    return _info.messageId;
   }
 }
